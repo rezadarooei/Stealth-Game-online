@@ -16,8 +16,10 @@ public:
 	AFPSObjectiveActor();
 
 protected:
+//use as main component
 	UPROPERTY(VisibleAnywhere,Category="Compnents")
 	UStaticMeshComponent *MeshComp;
+	//use as collision
 	UPROPERTY(VisibleAnywhere, Category = "Compnents")
 
 	USphereComponent *SephCom;
@@ -29,6 +31,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+protected:
+	void PlayEffect();
 	
-	
+	UPROPERTY(EditDefaultsOnly, Category="Effcts")
+	UParticleSystem* PickupFx;
+public:
+	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
+
 };
