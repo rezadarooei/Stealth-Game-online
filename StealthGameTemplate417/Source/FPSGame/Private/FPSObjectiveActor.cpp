@@ -4,15 +4,15 @@
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "FPSCharacter.h"
 
 // Sets default values
 AFPSObjectiveActor::AFPSObjectiveActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
 	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComponent"));
-	RootComponent = MeshComp;
 	MeshComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	RootComponent = MeshComp;
+
 	SephCom = CreateDefaultSubobject<USphereComponent>(TEXT("SephereComponet"));
 	SephCom->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	SephCom->SetCollisionResponseToAllChannels(ECR_Ignore);
@@ -24,14 +24,8 @@ AFPSObjectiveActor::AFPSObjectiveActor()
 void AFPSObjectiveActor::BeginPlay()
 {
 	Super::BeginPlay();
+
 	PlayEffect();
-}
-
-// Called every frame
-void AFPSObjectiveActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 void AFPSObjectiveActor::PlayEffect()
@@ -39,9 +33,20 @@ void AFPSObjectiveActor::PlayEffect()
 	UGameplayStatics::SpawnEmitterAtLocation(this, PickupFx, GetActorLocation());
 }
 
-void AFPSObjectiveActor::NotifyActorBeginOverlap(AActor * OtherActor)
+void AFPSObjectiveActor::NotifyActorBeginOverlap(AActor* OtherActor)
 {
+
 	Super::NotifyActorBeginOverlap(OtherActor);
+	UE_LOG(LogTemp, Warning, TEXT("it is work"))
+
 	PlayEffect();
+	AFPSCharacter* MyCharcter = Cast<AFPSCharacter>(OtherActor); //cast(template) MyCharcter FPScharcter
+	if (MyCharcter) { 
+
+		MyCharcter->bIsCarryingObjective = true;
+		
+		Destroy();
+
+	}
 }
 
