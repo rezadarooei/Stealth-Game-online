@@ -18,6 +18,8 @@ AFPSObjectiveActor::AFPSObjectiveActor()
 	SephCom->SetCollisionResponseToAllChannels(ECR_Ignore);
 	SephCom->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	SephCom->SetupAttachment(MeshComp);
+	
+
 }
 
 // Called when the game starts or when spawned
