@@ -20,6 +20,8 @@ public:
 public:	
 	UPROPERTY(VisibleAnywhere, Category = "ZOne")
 	UBoxComponent* OverlapComp;
+	UPROPERTY(VisibleAnywhere, Category = "Decal")
+	UDecalComponent* DecalComp;
 
 public:
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;

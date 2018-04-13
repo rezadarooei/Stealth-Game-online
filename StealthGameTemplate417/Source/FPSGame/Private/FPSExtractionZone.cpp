@@ -2,6 +2,7 @@
 
 #include "FPSExtractionZone.h"
 #include "Components/BoxComponent.h"
+#include "Components/DecalComponent.h"
 
 
 // Sets default values
@@ -14,9 +15,13 @@ AFPSExtractionZone::AFPSExtractionZone()
 	OverlapComp->SetCollisionResponseToAllChannels(ECR_Ignore);
 	//ignore all channels 
 	OverlapComp->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
-	//only care two this
+	//only care two this(حساس بودن به کاراکتر به صورا اولپی)
 	OverlapComp->SetBoxExtent(FVector(200.0f));
+	//ابعادباکس
 	RootComponent = OverlapComp;
+	DecalComp = CreateDefaultSubobject<UDecalComponent>(TEXT("DecalComp"));
+	DecalComp->DecalSize=FVector(200.0f, 200.0f, 200.0f);
+	DecalComp->SetupAttachment(OverlapComp);
 
 }
 
