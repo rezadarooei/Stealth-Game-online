@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "FPSObjectiveActor.h"
 #include "Components/SphereComponent.h"
@@ -42,7 +42,7 @@ void AFPSObjectiveActor::NotifyActorBeginOverlap(AActor* OtherActor)
 	UE_LOG(LogTemp, Warning, TEXT("it is work"))
 
 	PlayEffect();
-	AFPSCharacter* MyCharcter = Cast<AFPSCharacter>(OtherActor); //cast(template) MyCharcter FPScharcter
+	AFPSCharacter* MyCharcter = Cast<AFPSCharacter>(OtherActor); //treat otherActor as FPSCharcter my character is temporary character(رفتار کردن )
 	if (MyCharcter) { 
 
 		MyCharcter->bIsCarryingObjective = true;

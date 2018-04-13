@@ -3,7 +3,8 @@
 #include "FPSExtractionZone.h"
 #include "Components/BoxComponent.h"
 #include "Components/DecalComponent.h"
-
+#include "FPSCharacter.h"
+#include "FPSGameMode.h"
 
 // Sets default values
 AFPSExtractionZone::AFPSExtractionZone()
@@ -29,7 +30,15 @@ AFPSExtractionZone::AFPSExtractionZone()
 void AFPSExtractionZone::NotifyActorBeginOverlap(AActor* OtherActor)
 {
 	Super::NotifyActorBeginOverlap(OtherActor);
-	UE_LOG(LogTemp, Warning, TEXT("it is work"))
+	AFPSCharacter* MyPawn = Cast<AFPSCharacter>(OtherActor);
+	if (MyPawn && MyPawn->bIsCarryingObjective==true) {
+		AFPSGameMode* GM=Cast<AFPSGameMode>(GetWorld()->GetAuthGameMode());
+		if (GM) {
+			GM->CompleteMission(MyPawn);
+		}
+		
+	}
+	
 
 }
 
