@@ -25,4 +25,6 @@ public:
 
 public:
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
+	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
+	USoundBase* ObjectiveMissingSound;
 };
