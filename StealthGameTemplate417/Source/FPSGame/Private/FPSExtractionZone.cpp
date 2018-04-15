@@ -38,7 +38,7 @@ void AFPSExtractionZone::NotifyActorBeginOverlap(AActor* OtherActor)
 	if (MyPawn->bIsCarryingObjective == true) {
 		AFPSGameMode* GM = Cast<AFPSGameMode>(GetWorld()->GetAuthGameMode());
 		if (GM) {
-			GM->CompleteMission(MyPawn);
+			GM->CompleteMission(MyPawn,true);
 		}
 	}
 	else { UGameplayStatics::PlaySound2D(this,ObjectiveMissingSound); }
