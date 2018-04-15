@@ -10,7 +10,6 @@ AFPSAIGuard::AFPSAIGuard()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
-
 	PawnSensingComp->OnSeePawn.AddDynamic(this,&AFPSAIGuard::OnPawnSeen);
 	PawnSensingComp->OnHearNoise.AddDynamic(this,&AFPSAIGuard::OnHearNoise);
 }
@@ -19,6 +18,7 @@ AFPSAIGuard::AFPSAIGuard()
 void AFPSAIGuard::BeginPlay()
 {
 	Super::BeginPlay();
+	OrginalRotaion=GetActorRotation();
 	
 }
 
@@ -32,6 +32,21 @@ void AFPSAIGuard::OnPawnSeen(APawn * SeenPawn)
 
 void AFPSAIGuard::OnHearNoise(APawn* InstigatorNoise, const FVector &Location, float Volume) {
 	DrawDebugSphere(GetWorld(),Location, 32.0f, 12, FColor::Red, false, 10.0f);
+	FVector Direction = Location - GetActorLocation();
+	Direction.Normalize();
+	FRotator NewLookAt=FRotationMatrix::MakeFromX(Direction).Rotator();
+	NewLookAt.Pitch = 0.0f;
+	NewLookAt.Roll=0.0f;
+	SetActorRotation(NewLookAt);
+
+	GetWorldTimerManager().ClearTimer(TimerHandele_RestRotation);
+	GetWorldTimerManager().SetTimer(TimerHandele_RestRotation, this, &AFPSAIGuard::RestOrintation, 3.0f, false);
+
+}
+
+void AFPSAIGuard::RestOrintation()
+{
+	SetActorRotation(OrginalRotaion);
 }
 
 // Called every frame
