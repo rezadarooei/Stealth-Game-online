@@ -5,6 +5,8 @@
 #include "Perception/PawnSensingComponent.h"
 #include "DrawDebugHelpers.h"
 #include "FPSGameMode.h"
+#include "BehaviorTree/BehaviorTree.h"
+
 // Sets default values
 AFPSAIGuard::AFPSAIGuard()
 {

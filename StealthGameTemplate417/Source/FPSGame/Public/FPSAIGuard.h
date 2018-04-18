@@ -4,8 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+
 #include "FPSAIGuard.generated.h"
+
 class UPawnSensingComponent;
+
+
 UENUM(BlueprintType)
 enum class EAIState:uint8
 {
@@ -25,6 +29,7 @@ class FPSGAME_API AFPSAIGuard : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AFPSAIGuard();
+	
 
 protected:
 	// Called when the game starts or when spawned
