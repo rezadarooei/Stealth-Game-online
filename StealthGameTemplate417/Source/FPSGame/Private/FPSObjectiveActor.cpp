@@ -19,7 +19,8 @@ AFPSObjectiveActor::AFPSObjectiveActor()
 	SephCom->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	SephCom->SetupAttachment(MeshComp);
 	
-
+	SetReplicates(true);
+	
 }
 
 // Called when the game starts or when spawned
@@ -39,16 +40,20 @@ void AFPSObjectiveActor::NotifyActorBeginOverlap(AActor* OtherActor)
 {
 
 	Super::NotifyActorBeginOverlap(OtherActor);
-	UE_LOG(LogTemp, Warning, TEXT("it is work"))
-
+	
 	PlayEffect();
-	AFPSCharacter* MyCharcter = Cast<AFPSCharacter>(OtherActor); //treat otherActor as FPSCharcter my character is temporary character(رفتار کردن )
-	if (MyCharcter) { 
 
-		MyCharcter->bIsCarryingObjective = true;
+	if (Role == ROLE_Authority) {
+		AFPSCharacter* MyCharcter = Cast<AFPSCharacter>(OtherActor); //treat otherActor as FPSCharcter my character is temporary character(رفتار کردن )
+		if (MyCharcter) {
+
+			MyCharcter->bIsCarryingObjective = true;
+			Destroy();
+			UE_LOG(LogTemp,Warning,TEXT("it is ok"))
+		}
+	
 		
-		Destroy();
-
 	}
+	
 }
 
