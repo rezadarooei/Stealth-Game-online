@@ -54,14 +54,13 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
 	UAnimSequence* FireAnimation;
 
-	UPROPERTY(BlueprintReadOnly, Category = "GamePlay")
+	UPROPERTY(Replicated,BlueprintReadOnly, Category = "GamePlay")
 	bool bIsCarryingObjective;
 	
 protected:
 	
 	/** Fires a projectile. */
 	void Fire();
-
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerFire();
 
@@ -70,6 +69,8 @@ protected:
 
 	/** Handles strafing movement, left and right */
 	void MoveRight(float Val);
+
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 

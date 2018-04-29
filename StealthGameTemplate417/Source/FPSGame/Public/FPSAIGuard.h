@@ -48,7 +48,13 @@ protected:
 	void RestOrintation();
 
 	FTimerHandle TimerHandele_RestRotation;
-	EAIState GuardState;
+
+
+	UPROPERTY(ReplicatedUsing = OnRep_GuardState)
+	EAIState GuardState;//Enum AI State
+
+	UFUNCTION()
+	void onRep_GuardState();
 
 	void SetGuardState(EAIState NewState);
 	UFUNCTION(BlueprintImplementableEvent,Category="AI")
@@ -56,6 +62,10 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+
+	//void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 	
 
 	

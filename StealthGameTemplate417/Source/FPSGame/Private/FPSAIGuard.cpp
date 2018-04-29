@@ -6,7 +6,7 @@
 #include "DrawDebugHelpers.h"
 #include "FPSGameMode.h"
 #include "BehaviorTree/BehaviorTree.h"
-
+#include "Net/UnrealNetwork.h"
 // Sets default values
 AFPSAIGuard::AFPSAIGuard()
 {
@@ -66,14 +66,20 @@ void AFPSAIGuard::RestOrintation()
 	SetActorRotation(OrginalRotaion);
 	SetGuardState(EAIState::Idle);
 }
-
+//it is for replicated states to the client
+void AFPSAIGuard::onRep_GuardState()
+{
+	OnStateChanged(GuardState);
+}
+//the main state
 void AFPSAIGuard::SetGuardState(EAIState NewState)
 {
 	if (GuardState==NewState) {
 		return;
 	}
 	GuardState = NewState;
-	OnStateChanged(GuardState);
+	onRep_GuardState();
+	//OnStateChanged(GuardState);
 }
 
 // Called every frame
@@ -83,3 +89,9 @@ void AFPSAIGuard::Tick(float DeltaTime)
 
 }
 
+void AFPSAIGuard::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AFPSAIGuard, GuardState);
+}
