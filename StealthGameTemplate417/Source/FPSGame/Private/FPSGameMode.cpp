@@ -4,6 +4,7 @@
 #include "FPSHUD.h"
 #include "FPSCharacter.h"
 #include "UObject/ConstructorHelpers.h"
+#include "FPSGameState.h"
 
 AFPSGameMode::AFPSGameMode()
 {
@@ -13,12 +14,17 @@ AFPSGameMode::AFPSGameMode()
 
 	// use our custom HUD class
 	HUDClass = AFPSHUD::StaticClass();
+	GameStateClass = AFPSGameState::StaticClass();
 }
 //what happened when the game end.(?? ????? ???? ?? ??? ?????? ??? ???? ?? ??? ???? ??? ??? ?? ?? ???? ??? ????? ?????? ?? ???? ???? ??)
 void AFPSGameMode::CompleteMission(APawn * InstigatorPawn,bool bMissionSucess)
 {
 	if (InstigatorPawn) {
-		InstigatorPawn->DisableInput(nullptr);
+		
+	}
+	AFPSGameState* GS = GetGameState<AFPSGameState>();
+	if (GS) {
+		GS->MulticastOnMissionComplete(InstigatorPawn, bMissionSucess);
 	}
 	OnMissionComplete(InstigatorPawn,bMissionSucess);
 }
