@@ -56,6 +56,8 @@ public:
 
 	UPROPERTY(Replicated,BlueprintReadOnly, Category = "GamePlay")
 	bool bIsCarryingObjective;
+	UPROPERTY(Replicated, BlueprintReadOnly, Category = "GamePlay")
+	int32 FireNumber=0;
 	
 protected:
 	

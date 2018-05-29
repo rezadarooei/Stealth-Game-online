@@ -8,7 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Components/PawnNoiseEmitterComponent.h"
 #include "Net/UnrealNetwork.h"
-
+#include "FPSGameMode.h"
 
 AFPSCharacter::AFPSCharacter()
 {
@@ -71,6 +71,17 @@ void AFPSCharacter::Fire()
 			AnimInstance->PlaySlotAnimationAsDynamicMontage(FireAnimation, "Arms", 0.0f);
 		}
 	}
+	FireNumber++;
+	
+	if (FireNumber == 5) {
+		AFPSGameMode* GM = Cast<AFPSGameMode>(GetWorld()->GetAuthGameMode());
+		APawn* charcter=Cast<APawn>(GetWorld()->GetFirstPlayerController()->GetPawn());
+		
+		if (GM) {
+			GM->OnMissionCompleted(charcter, false);
+		}
+		
+		}
 }
 void AFPSCharacter::ServerFire_Implementation()
 {
